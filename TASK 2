@@ -1,0 +1,173 @@
+import React, { useState } from "react";
+
+function Form() {
+  const [name, setName] = useState("");
+  const [age, setAge] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPass, setConfirmPass] = useState("");
+
+  const [errors, setErrors] = useState({});
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    let formErrors = {};
+
+    // 1. Required Field + Regex Validation (Name)
+    if (!name) {
+      formErrors.name = "Name is required";
+    } else if (!/^[A-Za-z ]{3,15}$/.test(name)) {
+      formErrors.name = "Name must contain only letters (3–15)";
+    }
+
+    // 2. Range Validation (Age)
+    if (!age) {
+      formErrors.age = "Age is required";
+    } else if (age < 18 || age > 60) {
+      formErrors.age = "Age must be between 18 and 60";
+    }
+
+    // 3. Regex Validation (Email)
+    if (!email) {
+      formErrors.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      formErrors.email = "Invalid email format";
+    }
+
+    // 4. Regex Validation (Phone Number)
+    if (!phone) {
+      formErrors.phone = "Phone number is required";
+    } else if (!/^\d{10}$/.test(phone)) {
+      formErrors.phone = "Phone must be exactly 10 digits";
+    }
+
+    // 5. Regex Validation (Password)
+    if (!password) {
+      formErrors.password = "Password is required";
+    } else if (
+      !/^(?=.*[A-Z])(?=.*\d)(?=.*[@#$!]).{6,}$/.test(password)
+    ) {
+      formErrors.password =
+        "Password must contain uppercase, number & special character";
+    }
+
+    // 6. Compare Validation (Password Match)
+    if (!confirmPass) {
+      formErrors.confirmPass = "Confirm Password is required";
+    } else if (confirmPass !== password) {
+      formErrors.confirmPass = "Passwords do not match";
+    }
+
+    setErrors(formErrors);
+
+    if (Object.keys(formErrors).length === 0) {
+      alert("Client Login Successful ✅");
+      console.log({ name, age, email, phone });
+    }
+  };
+
+  return (
+    <div style={styles.container}>
+      <form style={styles.form} onSubmit={handleSubmit}>
+        <h2 style={styles.heading}>Client Login Form</h2>
+
+        <input
+          type="text"
+          placeholder="Enter Name"
+          onChange={(e) => setName(e.target.value)}
+          style={styles.input}
+        />
+        <p style={styles.error}>{errors.name}</p>
+
+        <input
+          type="number"
+          placeholder="Enter Age"
+          onChange={(e) => setAge(e.target.value)}
+          style={styles.input}
+        />
+        <p style={styles.error}>{errors.age}</p>
+
+        <input
+          type="text"
+          placeholder="Enter Email"
+          onChange={(e) => setEmail(e.target.value)}
+          style={styles.input}
+        />
+        <p style={styles.error}>{errors.email}</p>
+
+        <input
+          type="text"
+          placeholder="Enter Phone"
+          onChange={(e) => setPhone(e.target.value)}
+          style={styles.input}
+        />
+        <p style={styles.error}>{errors.phone}</p>
+
+        <input
+          type="password"
+          placeholder="Enter Password"
+          onChange={(e) => setPassword(e.target.value)}
+          style={styles.input}
+        />
+        <p style={styles.error}>{errors.password}</p>
+
+        <input
+          type="password"
+          placeholder="Confirm Password"
+          onChange={(e) => setConfirmPass(e.target.value)}
+          style={styles.input}
+        />
+        <p style={styles.error}>{errors.confirmPass}</p>
+
+        <button style={styles.button}>Login</button>
+      </form>
+    </div>
+  );
+}
+
+/* 🎨 Multicolour CSS */
+const styles = {
+  container: {
+    minHeight: "100vh",
+    background: "linear-gradient(to right, #43cea2, #185a9d)",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  form: {
+    background: "white",
+    padding: "25px",
+    borderRadius: "12px",
+    width: "320px",
+    boxShadow: "0px 10px 25px rgba(0,0,0,0.3)"
+  },
+  heading: {
+    textAlign: "center",
+    color: "#ff512f"
+  },
+  input: {
+    width: "100%",
+    padding: "10px",
+    marginTop: "8px",
+    borderRadius: "6px",
+    border: "1px solid #ccc"
+  },
+  button: {
+    width: "100%",
+    marginTop: "15px",
+    padding: "10px",
+    background: "linear-gradient(to right, #ff512f, #dd2476)",
+    color: "white",
+    border: "none",
+    borderRadius: "8px",
+    cursor: "pointer"
+  },
+  error: {
+    color: "red",
+    fontSize: "12px",
+    marginBottom: "5px"
+  }
+};
+
+export default Form;
