@@ -1,0 +1,126 @@
+Task 13: Implement a simple user profile editing system with form validation.
+
+import React, { useState } from "react";
+import "./App.css";
+
+
+function App() {
+  const [name, setName] = useState("John Doe");
+  const [email, setEmail] = useState("johndoe@example.com");
+  const [phone, setPhone] = useState("1234567890");
+  const [saved, setSaved] = useState(false);
+
+
+  const validateEmail = (email) => /\S+@\S+\.\S+/.test(email);
+  const validatePhone = (phone) => /^\d{10}$/.test(phone);
+
+
+  const handleSave = () => {
+    if (!name || !email || !phone) {
+      alert("Please fill all fields!");
+      return;
+    }
+    if (!validateEmail(email)) {
+      alert("Please enter a valid email!");
+      return;
+    }
+    if (!validatePhone(phone)) {
+      alert("Please enter a valid 10-digit phone number!");
+      return;
+    }
+
+
+    setSaved(true);
+    alert("✅ Profile updated successfully!");
+  };
+
+
+  const editProfile = () => setSaved(false);
+
+
+  return (
+    <div className="app">
+      <h1>User Profile 🧑‍💻</h1>
+
+
+      {!saved ? (
+        <div className="form">
+          <input
+            type="text"
+            placeholder="Enter your name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <input
+            type="email"
+            placeholder="Enter your email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Enter your phone number"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+          />
+          <button onClick={handleSave}>Save Profile</button>
+        </div>
+      ) : (
+        <div className="success">
+          <h2>Profile Saved! ✅</h2>
+          <p>Name: {name}</p>
+          <p>Email: {email}</p>
+          <p>Phone: {phone}</p>
+          <button onClick={editProfile}>Edit Profile</button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+
+export default App;
+
+
+
+App.css
+.app {
+  text-align: center;
+  font-family: Arial, sans-serif;
+  margin-top: 50px;
+}
+
+
+input {
+  display: block;
+  margin: 10px auto;
+  padding: 10px;
+  width: 250px;
+  font-size: 16px;
+}
+
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #ff9800;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+
+button:hover {
+  background-color: #e68900;
+}
+
+
+.success {
+  margin-top: 20px;
+  color: green;
+}
+
+
+
