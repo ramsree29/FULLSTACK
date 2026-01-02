@@ -1,0 +1,175 @@
+Task 11: Online Cab Booking Application using JavaScript Dialog Boxes.
+
+import React, { useState } from "react";
+import "./App.css";
+
+
+function App() {
+  const [userName, setUserName] = useState("");
+  const [pickup, setPickup] = useState("");
+  const [drop, setDrop] = useState("");
+  const [cabType, setCabType] = useState("Mini");
+  const [distance, setDistance] = useState(1);
+  const [fare, setFare] = useState(0);
+  const [confirmed, setConfirmed] = useState(false);
+
+
+  const handleBooking = () => {
+    if (!userName || !pickup || !drop || distance <= 0) {
+      alert("Please fill all fields correctly!");
+      return;
+    }
+
+
+    // Calculate fare
+    let baseFare = 0;
+    switch (cabType) {
+      case "Mini":
+        baseFare = 5;
+        break;
+      case "Sedan":
+        baseFare = 10;
+        break;
+      case "SUV":
+        baseFare = 15;
+        break;
+      default:
+        baseFare = 0;
+    }
+    const calculatedFare = baseFare * distance;
+
+
+    // Confirm booking
+    const isConfirmed = window.confirm(
+      `Please confirm your booking:\n` +
+      `Name: ${userName}\n` +
+      `Pickup: ${pickup}\n` +
+      `Drop: ${drop}\n` +
+      `Cab Type: ${cabType}\n` +
+      `Distance: ${distance} km\n` +
+      `Estimated Fare: $${calculatedFare.toFixed(2)}`
+    );
+
+
+    if (isConfirmed) {
+      setFare(calculatedFare);
+      setConfirmed(true);
+      alert(`✅ Cab booked successfully! Have a safe journey, ${userName}!`);
+    } else {
+      alert("Booking cancelled.");
+    }
+  };
+
+
+  const resetForm = () => {
+    setUserName("");
+    setPickup("");
+    setDrop("");
+    setCabType("Mini");
+    setDistance(1);
+    setFare(0);
+    setConfirmed(false);
+  };
+
+
+  return (
+    <div className="app">
+      <h1>Online Cab Booking 🚖</h1>
+
+
+      {!confirmed ? (
+        <div className="form">
+          <input
+            type="text"
+            placeholder="Enter your name"
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Pickup location"
+            value={pickup}
+            onChange={(e) => setPickup(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Drop location"
+            value={drop}
+            onChange={(e) => setDrop(e.target.value)}
+          />
+          <select value={cabType} onChange={(e) => setCabType(e.target.value)}>
+            <option value="Mini">Mini - $5/km</option>
+            <option value="Sedan">Sedan - $10/km</option>
+            <option value="SUV">SUV - $15/km</option>
+          </select>
+          <input
+            type="number"
+            min="1"
+            placeholder="Distance in km"
+            value={distance}
+            onChange={(e) => setDistance(Number(e.target.value))}
+          />
+          <button onClick={handleBooking}>Book Cab</button>
+        </div>
+      ) : (
+        <div className="success">
+          <h2>Booking Confirmed! ✅</h2>
+          <p>Name: {userName}</p>
+          <p>Pickup: {pickup}</p>
+          <p>Drop: {drop}</p>
+          <p>Cab Type: {cabType}</p>
+          <p>Distance: {distance} km</p>
+          <p>Estimated Fare: ${fare.toFixed(2)}</p>
+          <button onClick={resetForm}>Book Another Cab</button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+
+export default App;
+
+
+
+App.css
+.app {
+  text-align: center;
+  font-family: Arial, sans-serif;
+  margin-top: 50px;
+}
+
+
+input, select {
+  display: block;
+  margin: 10px auto;
+  padding: 10px;
+  width: 250px;
+  font-size: 16px;
+}
+
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+
+button:hover {
+  background-color: #0b7dda;
+}
+
+
+.success {
+  margin-top: 20px;
+  color: green;
+}
+
+
+
