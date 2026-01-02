@@ -1,0 +1,171 @@
+
+import { useState } from "react";
+import "./App.css";
+
+
+function App() {
+  const [name, setName] = useState("");
+  const [message, setMessage] = useState("");
+  const [feedbacks, setFeedbacks] = useState([]);
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+
+    if (!name || !message) return;
+
+
+    const newFeedback = {
+      name,
+      message,
+    };
+
+
+    setFeedbacks([...feedbacks, newFeedback]);
+    setName("");
+    setMessage("");
+  };
+
+
+  return (
+    <div className="container">
+      <div className="feedback-box">
+        <h2>📝 Feedback Form</h2>
+
+
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            placeholder="Your Name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+
+
+          <textarea
+            placeholder="Your Feedback"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+          ></textarea>
+
+
+          <button type="submit">Submit</button>
+        </form>
+
+
+        <div className="feedback-list">
+          {feedbacks.length === 0 && (
+            <p className="empty">No feedback yet</p>
+          )}
+
+
+          {feedbacks.map((fb, index) => (
+            <div key={index} className="feedback-item">
+              <h4>{fb.name}</h4>
+              <p>{fb.message}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
+export default App;
+
+
+
+App.css
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+
+.container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
+  padding: 20px;
+}
+
+
+.feedback-box {
+  background: white;
+  padding: 30px;
+  width: 420px;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+
+.feedback-box h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+
+.feedback-box input,
+.feedback-box textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  outline: none;
+}
+
+
+.feedback-box textarea {
+  resize: none;
+  height: 80px;
+}
+
+
+.feedback-box button {
+  width: 100%;
+  padding: 10px;
+  background: #a6c1ee;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+
+.feedback-box button:hover {
+  background: #8fa8e6;
+}
+
+
+.feedback-list {
+  margin-top: 20px;
+}
+
+
+.feedback-item {
+  background: #f4f6ff;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+
+.feedback-item h4 {
+  margin-bottom: 5px;
+}
+
+
+.empty {
+  text-align: center;
+  color: gray;
+}
+
+
+
