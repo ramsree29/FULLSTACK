@@ -1,0 +1,157 @@
+Task 10: Hotel Reservation System using JavaScript Dialog Boxes
+
+import React, { useState } from "react";
+import "./App.css";
+
+
+function App() {
+  const [guestName, setGuestName] = useState("");
+  const [nights, setNights] = useState(1);
+  const [roomType, setRoomType] = useState("Single");
+  const [confirmed, setConfirmed] = useState(false);
+  const [totalPrice, setTotalPrice] = useState(0);
+
+
+  const handleReservation = () => {
+    if (!guestName || nights <= 0 || !roomType) {
+      alert("Please fill all fields correctly!");
+      return;
+    }
+
+
+    // Calculate price
+    let pricePerNight = 0;
+    switch (roomType) {
+      case "Single":
+        pricePerNight = 50;
+        break;
+      case "Double":
+        pricePerNight = 90;
+        break;
+      case "Suite":
+        pricePerNight = 150;
+        break;
+      default:
+        pricePerNight = 0;
+    }
+    const calculatedPrice = pricePerNight * nights;
+
+
+    // Confirm reservation
+    const isConfirmed = window.confirm(
+      `Please confirm your reservation:\n` +
+      `Name: ${guestName}\n` +
+      `Room Type: ${roomType}\n` +
+      `Nights: ${nights}\n` +
+      `Total Price: $${calculatedPrice}`
+    );
+
+
+    if (isConfirmed) {
+      setTotalPrice(calculatedPrice);
+      setConfirmed(true);
+      alert(`✅ Reservation confirmed! Enjoy your stay, ${guestName}!`);
+    } else {
+      alert("Reservation cancelled.");
+    }
+  };
+
+
+  const resetForm = () => {
+    setGuestName("");
+    setNights(1);
+    setRoomType("Single");
+    setConfirmed(false);
+    setTotalPrice(0);
+  };
+
+
+  return (
+    <div className="app">
+      <h1>Hotel Reservation System 🏨</h1>
+
+
+      {!confirmed ? (
+        <div className="form">
+          <input
+            type="text"
+            placeholder="Enter your name"
+            value={guestName}
+            onChange={(e) => setGuestName(e.target.value)}
+          />
+          <input
+            type="number"
+            min="1"
+            value={nights}
+            onChange={(e) => setNights(Number(e.target.value))}
+          />
+          <select
+            value={roomType}
+            onChange={(e) => setRoomType(e.target.value)}
+          >
+            <option value="Single">Single - $50/night</option>
+            <option value="Double">Double - $90/night</option>
+            <option value="Suite">Suite - $150/night</option>
+          </select>
+          <button onClick={handleReservation}>Reserve Room</button>
+        </div>
+      ) : (
+        <div className="success">
+          <h2>Reservation Confirmed! ✅</h2>
+          <p>Name: {guestName}</p>
+          <p>Room Type: {roomType}</p>
+          <p>Nights: {nights}</p>
+          <p>Total Price: ${totalPrice}</p>
+          <button onClick={resetForm}>Book Another Room</button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+
+export default App;
+
+
+
+App.css
+.app {
+  text-align: center;
+  font-family: Arial, sans-serif;
+  margin-top: 50px;
+}
+
+
+input, select {
+  display: block;
+  margin: 10px auto;
+  padding: 10px;
+  width: 250px;
+  font-size: 16px;
+}
+
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+
+button:hover {
+  background-color: #0b7dda;
+}
+
+
+.success {
+  margin-top: 20px;
+  color: green;
+}
+
+
+
