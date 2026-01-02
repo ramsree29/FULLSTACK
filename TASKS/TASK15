@@ -1,0 +1,97 @@
+Task 15 Design a login interface that redirects users based on role selection.
+
+import { useState } from "react";
+import "./App.css";
+
+function App() {
+  const [name, setName] = useState("");
+  const [role, setRole] = useState("");
+  const [page, setPage] = useState("login");
+
+  const handleLogin = () => {
+    if (name === "" || role === "") {
+      alert("Please enter name and select role");
+    } else {
+      setPage(role);
+    }
+  };
+
+  return (
+    <div className="box">
+      {page === "login" && (
+        <>
+          <h2>🔐 Smart Login</h2>
+
+          <input
+            type="text"
+            placeholder="Your Name"
+            onChange={(e) => setName(e.target.value)}
+          />
+
+          <select onChange={(e) => setRole(e.target.value)}>
+            <option value="">Choose Role</option>
+            <option value="admin">Admin</option>
+            <option value="user">User</option>
+          </select>
+
+          <button onClick={handleLogin}>Enter</button>
+        </>
+      )}
+
+      {page === "admin" && (
+        <h2 className="admin">👑 Welcome Admin {name}</h2>
+      )}
+
+      {page === "user" && (
+        <h2 className="user">🙋 Welcome User {name}</h2>
+      )}
+    </div>
+  );
+}
+
+export default App;
+App.css
+body {
+  background: linear-gradient(to right, #667eea, #764ba2);
+  font-family: Arial, sans-serif;
+}
+
+.box {
+  width: 320px;
+  margin: 120px auto;
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 10px;
+  margin: 12px 0;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #5a67d8;
+}
+
+.admin {
+  color: #e53e3e;
+}
+
+.user {
+  color: #38a169;
+}
