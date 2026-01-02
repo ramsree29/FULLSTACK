@@ -1,0 +1,129 @@
+Task 12: Design an event registration interface with confirmation alerts.
+
+import React, { useState } from "react";
+import "./App.css";
+
+
+function App() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [eventType, setEventType] = useState("Workshop");
+  const [registered, setRegistered] = useState(false);
+
+
+  const handleRegistration = () => {
+    if (!name || !email) {
+      alert("Please fill all fields!");
+      return;
+    }
+
+
+    const isConfirmed = window.confirm(
+      `Please confirm your registration:\n` +
+      `Name: ${name}\n` +
+      `Email: ${email}\n` +
+      `Event Type: ${eventType}`
+    );
+
+
+    if (isConfirmed) {
+      setRegistered(true);
+      alert(`🎉 Registration successful! Thank you, ${name}!`);
+    } else {
+      alert("Registration cancelled.");
+    }
+  };
+
+
+  const resetForm = () => {
+    setName("");
+    setEmail("");
+    setEventType("Workshop");
+    setRegistered(false);
+  };
+
+
+  return (
+    <div className="app">
+      <h1>Event Registration 📝</h1>
+
+
+      {!registered ? (
+        <div className="form">
+          <input
+            type="text"
+            placeholder="Enter your name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <input
+            type="email"
+            placeholder="Enter your email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <select value={eventType} onChange={(e) => setEventType(e.target.value)}>
+            <option value="Workshop">Workshop</option>
+            <option value="Seminar">Seminar</option>
+            <option value="Conference">Conference</option>
+          </select>
+          <button onClick={handleRegistration}>Register</button>
+        </div>
+      ) : (
+        <div className="success">
+          <h2>Registration Confirmed! ✅</h2>
+          <p>Name: {name}</p>
+          <p>Email: {email}</p>
+          <p>Event Type: {eventType}</p>
+          <button onClick={resetForm}>Register Another Participant</button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+
+export default App;
+
+
+
+App.css
+.app {
+  text-align: center;
+  font-family: Arial, sans-serif;
+  margin-top: 50px;
+}
+
+
+input, select {
+  display: block;
+  margin: 10px auto;
+  padding: 10px;
+  width: 250px;
+  font-size: 16px;
+}
+
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+
+button:hover {
+  background-color: #45a049;
+}
+
+
+.success {
+  margin-top: 20px;
+  color: green;
+}
+
+
