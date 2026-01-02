@@ -1,0 +1,119 @@
+Task 17: Implement a student feedback system with a rating and comments section.
+
+
+import React, { useState } from "react";
+import "./App.css";
+function App() {
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState("");
+  const [feedbackList, setFeedbackList] = useState([]);
+  const submitFeedback = () => {
+    if (rating > 0 && comment.trim() !== "") {
+      setFeedbackList([...feedbackList, { rating, comment }]);
+      setRating(0);
+      setComment("");
+    } else {
+      alert("Please provide a rating and a comment!");
+    }
+  };
+  return (
+    <div className="container">
+      <h1>Student Feedback System</h1>
+      <div className="feedback-form">
+        <label>
+          Rating:
+          <select value={rating} onChange={(e) => setRating(Number(e.target.value))}>
+            <option value={0}>Select</option>
+            <option value={1}>1 ⭐</option>
+            <option value={2}>2 ⭐⭐</option>
+            <option value={3}>3 ⭐⭐⭐</option>
+            <option value={4}>4 ⭐⭐⭐⭐</option>
+            <option value={5}>5 ⭐⭐⭐⭐⭐</option>
+          </select>
+        </label>
+        <label>
+          Comment:
+          <textarea
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+            placeholder="Write your feedback..."
+          />
+        </label>
+        <button onClick={submitFeedback}>Submit Feedback</button>
+      </div>
+      <div className="feedback-list">
+        <h2>All Feedback</h2>
+        {feedbackList.length === 0 ? (
+          <p>No feedback yet.</p>
+        ) : (
+          <ul>
+            {feedbackList.map((fb, index) => (
+              <li key={index}>
+                <strong>{fb.rating} ⭐</strong>: {fb.comment}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </div>
+  );
+}
+export default App;
+
+App.css
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background-color: #f4f4f4;
+}
+.container {
+  max-width: 600px;
+  margin: 30px auto;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+.feedback-form label {
+  display: block;
+  margin-bottom: 10px;
+}
+.feedback-form select,
+.feedback-form textarea {
+  width: 100%;
+  margin-top: 5px;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+.feedback-form button {
+  margin-top: 10px;
+  padding: 8px 12px;
+  border: none;
+  background-color: #27ae60;
+  color: white;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.feedback-form button:hover {
+  background-color: #2ecc71;
+}
+.feedback-list ul {
+  list-style: none;
+  padding: 0;
+}
+.feedback-list li {
+  padding: 8px;
+  border-bottom: 1px solid #eee;
+}
+
+main.jsx
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+import "./App.css";  // optional, but include for styling
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
