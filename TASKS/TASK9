@@ -1,0 +1,116 @@
+Task 9: Flight Ticket Booking using JavaScript Dialog Boxes. (Alerts, Confirmations, and User Input (Prompt) Dialogs).
+
+import React, { useState } from "react";
+import "./App.css";
+
+
+function App() {
+  const [name, setName] = useState("");
+  const [destination, setDestination] = useState("");
+  const [tickets, setTickets] = useState(1);
+  const [confirmed, setConfirmed] = useState(false);
+
+
+  const handleBooking = () => {
+    if (!name || !destination || tickets <= 0) {
+      alert("Please fill all fields correctly!");
+      return;
+    }
+
+
+    const isConfirmed = window.confirm(
+      `Please confirm your booking:\nName: ${name}\nDestination: ${destination}\nTickets: ${tickets}`
+    );
+
+
+    if (isConfirmed) {
+      setConfirmed(true);
+      alert("🎉 Your flight has been successfully booked!");
+    } else {
+      alert("Booking cancelled.");
+    }
+  };
+
+
+  return (
+    <div className="app">
+      <h1>Flight Ticket Booking ✈️</h1>
+      {!confirmed && (
+        <div className="form">
+          <input
+            type="text"
+            placeholder="Enter your name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Enter destination"
+            value={destination}
+            onChange={(e) => setDestination(e.target.value)}
+          />
+          <input
+            type="number"
+            min="1"
+            value={tickets}
+            onChange={(e) => setTickets(Number(e.target.value))}
+          />
+          <button onClick={handleBooking}>Book Flight</button>
+        </div>
+      )}
+      {confirmed && (
+        <div className="success">
+          <h2>Booking Confirmed! ✅</h2>
+          <p>Name: {name}</p>
+          <p>Destination: {destination}</p>
+          <p>Tickets: {tickets}</p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+
+export default App;
+
+
+
+App.css
+.app {
+  text-align: center;
+  font-family: Arial, sans-serif;
+  margin-top: 50px;
+}
+
+
+input {
+  display: block;
+  margin: 10px auto;
+  padding: 10px;
+  width: 250px;
+  font-size: 16px;
+}
+
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+
+button:hover {
+  background-color: #0b7dda;
+}
+
+
+.success {
+  margin-top: 20px;
+  color: green;
+}
+
+
