@@ -1,0 +1,166 @@
+Task 7: Simulate an attendance tracker interface that marks students present or absent dynamically.
+
+import { useState } from "react";
+import "./App.css";
+
+
+const studentsList = [
+  "Arun",
+  "Bala",
+  "Charan",
+  "Divya",
+  "Karthik",
+];
+
+
+function App() {
+  const [attendance, setAttendance] = useState(
+    studentsList.map((name) => ({
+      name,
+      status: "Not Marked",
+    }))
+  );
+
+
+  const markAttendance = (index, status) => {
+    const updated = [...attendance];
+    updated[index].status = status;
+    setAttendance(updated);
+  };
+
+
+  return (
+    <div className="container">
+      <div className="attendance-box">
+        <h2>📘 Attendance Tracker</h2>
+
+
+        {attendance.map((student, index) => (
+          <div key={index} className="student-row">
+            <span>{student.name}</span>
+
+
+            <div className="buttons">
+              <button
+                className="present"
+                onClick={() => markAttendance(index, "Present")}
+              >
+                Present
+              </button>
+
+
+              <button
+                className="absent"
+                onClick={() => markAttendance(index, "Absent")}
+              >
+                Absent
+              </button>
+            </div>
+
+
+            <span
+              className={`status ${
+                student.status === "Present"
+                  ? "green"
+                  : student.status === "Absent"
+                  ? "red"
+                  : ""
+              }`}
+            >
+              {student.status}
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+
+export default App;
+
+
+
+App.css
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+
+.container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #d4fc79, #96e6a1);
+  padding: 20px;
+}
+
+
+.attendance-box {
+  background: white;
+  padding: 30px;
+  width: 480px;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+
+.attendance-box h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+
+.student-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+
+.buttons {
+  display: flex;
+  gap: 8px;
+}
+
+
+.present {
+  background: #4caf50;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+
+.absent {
+  background: #f44336;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+
+.status {
+  font-weight: bold;
+}
+
+
+.green {
+  color: green;
+}
+
+
+.red {
+  color: red;
+}
+
+
