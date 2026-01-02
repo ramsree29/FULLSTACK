@@ -1,0 +1,169 @@
+Task 8: Develop a simple task list dashboard that allows adding and removing tasks.
+
+import { useState } from "react";
+import "./App.css";
+
+
+function App() {
+  const [task, setTask] = useState("");
+  const [tasks, setTasks] = useState([]);
+
+
+  const addTask = (e) => {
+    e.preventDefault();
+
+
+    if (!task.trim()) return;
+
+
+    setTasks([...tasks, task]);
+    setTask("");
+  };
+
+
+  const removeTask = (index) => {
+    const updatedTasks = tasks.filter((_, i) => i !== index);
+    setTasks(updatedTasks);
+  };
+
+
+  return (
+    <div className="container">
+      <div className="task-box">
+        <h2>🗂️ Task Dashboard</h2>
+
+
+        <form onSubmit={addTask} className="task-form">
+          <input
+            type="text"
+            placeholder="Enter a task"
+            value={task}
+            onChange={(e) => setTask(e.target.value)}
+          />
+          <button type="submit">Add</button>
+        </form>
+
+
+        <ul className="task-list">
+          {tasks.length === 0 && (
+            <p className="empty">No tasks added</p>
+          )}
+
+
+          {tasks.map((t, index) => (
+            <li key={index} className="task-item">
+              <span>{t}</span>
+              <button
+                className="delete"
+                onClick={() => removeTask(index)}
+              >
+                ❌
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+}
+
+
+export default App;
+
+
+
+App.css
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+
+.container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #fdfbfb, #ebedee);
+  padding: 20px;
+}
+
+
+.task-box {
+  background: white;
+  padding: 30px;
+  width: 420px;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+
+.task-box h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+
+.task-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+
+.task-form input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+
+.task-form button {
+  padding: 10px 15px;
+  background: #6c63ff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+
+.task-form button:hover {
+  background: #574fe2;
+}
+
+
+.task-list {
+  list-style: none;
+}
+
+
+.task-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f5f7ff;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+
+.delete {
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+
+.empty {
+  text-align: center;
+  color: gray;
+}
+
+
+
