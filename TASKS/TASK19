@@ -1,0 +1,132 @@
+Task 19: Construct a responsive blog layout with real-time comment update.
+
+import React, { useState } from "react";
+import "./App.css";
+function App() {
+  const [comments, setComments] = useState([]);
+  const [input, setInput] = useState("");
+  const addComment = () => {
+    if (input.trim() !== "") {
+      setComments([...comments, input]);
+      setInput("");
+    }
+  };
+  return (
+    <div className="container">
+      <header className="header">
+        <h1>My Blog</h1>
+      </header>
+      <main className="blog-content">
+        <article className="post">
+          <h2>How to Learn React</h2>
+          <p>
+            React is a powerful JavaScript library for building user interfaces.
+            With practice and understanding of components, state, and props, you
+            can build interactive web apps.
+          </p>
+        </article>
+        <section className="comments">
+          <h3>Comments ({comments.length})</h3>
+          <div className="comment-input">
+            <input
+              type="text"
+              placeholder="Write a comment..."
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+            />
+            <button onClick={addComment}>Post</button>
+          </div>
+          <ul className="comment-list">
+            {comments.map((comment, index) => (
+              <li key={index}>{comment}</li>
+            ))}
+          </ul>
+        </section>
+      </main>
+    </div>
+  );
+}
+export default App;
+App.css
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  background-color: #f8f8f8;
+}
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+.header {
+  text-align: center;
+  background-color: #34495e;
+  color: white;
+  padding: 15px;
+  border-radius: 5px;
+}
+.blog-content {
+  margin-top: 20px;
+}
+.post {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+.comments {
+  background-color: white;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+.comment-input {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+.comment-input input {
+  flex: 1;
+  padding: 8px;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+}
+.comment-input button {
+  padding: 8px 12px;
+  border: none;
+  background-color: #27ae60;
+  color: white;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.comment-input button:hover {
+  background-color: #2ecc71;
+}
+.comment-list {
+  list-style: none;
+  padding: 0;
+}
+.comment-list li {
+  padding: 8px;
+  border-bottom: 1px solid #eee;
+}
+@media (max-width: 600px) {
+  .comment-input {
+    flex-direction: column;
+  }
+  .comment-input button {
+    width: 100%;
+  }
+}
+
+
+main.jsx
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
