@@ -1,0 +1,99 @@
+Task 23: Design a multi-page student dashboard with navigation using React Router.
+Install the react routter:
+npm install react-router-dom
+
+main.jsx
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+import { BrowserRouter } from "react-router-dom";
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
+);
+
+App.jsx
+import { Routes, Route } from "react-router-dom";
+import Navbar from "./Navbar";
+import Home from "./Home";
+import Profile from "./Profile";
+import Courses from "./Courses";
+import Feedback from "./Feedback";
+
+function App() {
+  return (
+    <>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/courses" element={<Courses />} />
+        <Route path="/feedback" element={<Feedback />} />
+      </Routes>
+    </>
+  );
+}
+export default App;
+
+Navbar.jsx
+import { Link } from "react-router-dom";
+function Navbar() {
+  return (
+    <nav style={{ padding: "10px", background: "#222" }}>
+      <Link to="/" style={{ color: "white", margin: "10px" }}>Home</Link>
+      <Link to="/profile" style={{ color: "white", margin: "10px" }}>Profile</Link>
+      <Link to="/courses" style={{ color: "white", margin: "10px" }}>Courses</Link>
+      <Link to="/feedback" style={{ color: "white", margin: "10px" }}>Feedback</Link>
+    </nav>
+  );
+}
+export default Navbar;
+
+Home.jsx
+function Home() {
+  return <h2>Welcome to Student Dashboard</h2>;
+}
+
+export default Home;
+
+Profile.jsx
+function Profile() {
+  return (
+    <div>
+      <h2>Student Profile</h2>
+      <p>Name: John Doe</p>
+      <p>Roll No: 23BCS072</p>
+      <p>Course: BCS</p>
+    </div>
+  );
+}
+export default Profile;
+
+Courses.jsx
+function Courses() {
+  return (
+    <div>
+      <h2>My Courses</h2>
+      <ul>
+        <li>React JS</li>
+        <li>Data Structures</li>
+        <li>DBMS</li>
+      </ul>
+    </div>
+  );
+}
+export default Courses;
+
+Feedback.jsx
+function Feedback() {
+  return (
+    <div>
+      <h2>Feedback Page</h2>
+      <p>Students can submit feedback here.</p>
+    </div>
+  );
+}
+export default Feedback;
+
