@@ -1,0 +1,79 @@
+Task 21: Design a simple student management dashboard with navigation and data display.
+
+import React from "react";
+import Navbar from "./Navbar";
+import StudentTable from "./StudentTable";
+import "./App.css";
+function App() {
+  return (
+    <>
+      <Navbar />
+      <div className="container">
+        <h2>Student Management Dashboard</h2>
+        <StudentTable />
+      </div>
+    </>
+  );
+}
+export default App;
+
+Navbar.jsx
+import React from "react";
+function Navbar() {
+  return (
+    <nav className="navbar">
+      <h3>Student Manager</h3>
+      <ul>
+        <li>Dashboard</li>
+        <li>Students</li>
+        <li>Courses</li>
+        <li>Logout</li>
+      </ul>
+    </nav>
+  );
+}
+export default Navbar;
+
+StudentTable.jsx
+import React from "react";
+function StudentTable() {
+  const students = [
+    { id: 1, name: "John Doe", course: "Math", grade: "A" },
+    { id: 2, name: "Jane Smith", course: "Science", grade: "B" },
+    { id: 3, name: "Alex Brown", course: "English", grade: "A+" },
+  ];
+  return (
+    <table className="student-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Course</th>
+          <th>Grade</th>
+        </tr>
+      </thead>
+      <tbody>
+        {students.map((student) => (
+          <tr key={student.id}>
+            <td>{student.id}</td>
+            <td>{student.name}</td>
+            <td>{student.course}</td>
+            <td>{student.grade}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+}
+export default StudentTable;
+
+main.jsx
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+
