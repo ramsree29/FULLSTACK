@@ -1,0 +1,177 @@
+Task 6: Implement a simple course enrollment form that updates the enrolled course list in real time.
+
+import { useState } from "react";
+import "./App.css";
+
+
+const courseList = [
+  "React Basics",
+  "JavaScript Fundamentals",
+  "Web Development",
+  "Python Programming",
+  "Data Structures",
+];
+
+
+function App() {
+  const [studentName, setStudentName] = useState("");
+  const [course, setCourse] = useState("");
+  const [enrollments, setEnrollments] = useState([]);
+
+
+  const handleEnroll = (e) => {
+    e.preventDefault();
+
+
+    if (!studentName || !course) return;
+
+
+    const newEnrollment = {
+      name: studentName,
+      course,
+    };
+
+
+    setEnrollments([...enrollments, newEnrollment]);
+    setStudentName("");
+    setCourse("");
+  };
+
+
+  return (
+    <div className="container">
+      <div className="enroll-box">
+        <h2>🎓 Course Enrollment</h2>
+
+
+        <form onSubmit={handleEnroll}>
+          <input
+            type="text"
+            placeholder="Student Name"
+            value={studentName}
+            onChange={(e) => setStudentName(e.target.value)}
+          />
+
+
+          <select
+            value={course}
+            onChange={(e) => setCourse(e.target.value)}
+          >
+            <option value="">Select Course</option>
+            {courseList.map((c, index) => (
+              <option key={index} value={c}>
+                {c}
+              </option>
+            ))}
+          </select>
+
+
+          <button type="submit">Enroll</button>
+        </form>
+
+
+        <div className="enrolled-list">
+          <h3>📋 Enrolled Students</h3>
+
+
+          {enrollments.length === 0 && (
+            <p className="empty">No enrollments yet</p>
+          )}
+
+
+          {enrollments.map((item, index) => (
+            <div key={index} className="enroll-item">
+              <span>{item.name}</span>
+              <span>{item.course}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
+export default App;
+
+
+
+App.css
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+
+.container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #cfd9df, #e2ebf0);
+  padding: 20px;
+}
+
+
+.enroll-box {
+  background: white;
+  padding: 30px;
+  width: 450px;
+  border-radius: 10px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+
+.enroll-box h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+
+.enroll-box input,
+.enroll-box select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+
+.enroll-box button {
+  width: 100%;
+  padding: 10px;
+  background: #6a85b6;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+
+.enroll-box button:hover {
+  background: #5a75a6;
+}
+
+
+.enrolled-list {
+  margin-top: 20px;
+}
+
+
+.enroll-item {
+  display: flex;
+  justify-content: space-between;
+  background: #f5f7fa;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+
+.empty {
+  text-align: center;
+  color: gray;
+}
