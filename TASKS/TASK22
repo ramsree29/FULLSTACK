@@ -1,0 +1,90 @@
+Task 22: Simulate a simple product browsing page with category-based routing.
+Install the react router
+npm install react-router-dom
+
+main.jsx
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+import { BrowserRouter } from "react-router-dom";
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>
+);
+
+App.jsx
+import { Routes, Route } from "react-router-dom";
+import Navbar from "./Navbar";
+import Products from "./Products";
+import Category from "./Category";
+function App() {
+  return (
+    <>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Products />} />
+        <Route path="/category/:name" element={<Category />} />
+      </Routes>
+    </>
+  );
+}
+export default App;
+
+Navbar.jsx
+import { Link } from "react-router-dom";
+function Navbar() {
+  return (
+    <nav style={{ padding: "10px", background: "#333" }}>
+      <Link to="/" style={{ color: "white", margin: "10px" }}>
+        All Products
+      </Link>
+      <Link to="/category/electronics" style={{ color: "white", margin: "10px" }}>
+        Electronics
+      </Link>
+      <Link to="/category/clothing" style={{ color: "white", margin: "10px" }}>
+        Clothing
+      </Link>
+      <Link to="/category/books" style={{ color: "white", margin: "10px" }}>
+        Books
+      </Link>
+    </nav>
+  );
+}
+export default Navbar;
+
+
+Products.jsx
+function Products() {
+  return (
+    <div>
+      <h2>All Products</h2>
+      <p>Select a category to view products.</p>
+    </div>
+  );
+}
+export default Products;
+
+Category.jsx
+import { useParams } from "react-router-dom";
+function Category() {
+  const { name } = useParams();
+  const products = {
+    electronics: ["Mobile", "Laptop", "Headphones"],
+    clothing: ["T-Shirt", "Jeans", "Jacket"],
+    books: ["React Book", "Java Book", "Python Book"],
+  };
+  return (
+    <div>
+     <h2>{name.toUpperCase()} Products</h2>
+      <ul>
+        {products[name]?.map((item, index) => (
+          <li key={index}>{item}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+export default Category;
+
+
