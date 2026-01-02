@@ -1,0 +1,165 @@
+Task 14: Design a dynamic registration form for an online workshop with live preview.
+
+import React, { useState } from "react";
+import "./App.css";
+
+
+function App() {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [topic, setTopic] = useState("ReactJS");
+  const [level, setLevel] = useState("Beginner");
+  const [registered, setRegistered] = useState(false);
+
+
+  const validateEmail = (email) => /\S+@\S+\.\S+/.test(email);
+
+
+  const handleRegister = () => {
+    if (!name || !email) {
+      alert("Please fill all required fields!");
+      return;
+    }
+    if (!validateEmail(email)) {
+      alert("Please enter a valid email!");
+      return;
+    }
+
+
+    const isConfirmed = window.confirm(
+      `Please confirm your registration:\n` +
+      `Name: ${name}\nEmail: ${email}\nTopic: ${topic}\nLevel: ${level}`
+    );
+
+
+    if (isConfirmed) {
+      setRegistered(true);
+      alert(`🎉 Registration successful! See you in the workshop, ${name}!`);
+    } else {
+      alert("Registration cancelled.");
+    }
+  };
+
+
+  const resetForm = () => {
+    setName("");
+    setEmail("");
+    setTopic("ReactJS");
+    setLevel("Beginner");
+    setRegistered(false);
+  };
+
+
+  return (
+    <div className="app">
+      <h1>Online Workshop Registration 🖥️</h1>
+
+
+      {!registered ? (
+        <div className="form">
+          <input
+            type="text"
+            placeholder="Enter your name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <input
+            type="email"
+            placeholder="Enter your email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <select value={topic} onChange={(e) => setTopic(e.target.value)}>
+            <option value="ReactJS">ReactJS</option>
+            <option value="NodeJS">NodeJS</option>
+            <option value="Python">Python</option>
+            <option value="Data Science">Data Science</option>
+          </select>
+          <select value={level} onChange={(e) => setLevel(e.target.value)}>
+            <option value="Beginner">Beginner</option>
+            <option value="Intermediate">Intermediate</option>
+            <option value="Advanced">Advanced</option>
+          </select>
+          <button onClick={handleRegister}>Register</button>
+
+
+          <div className="preview">
+            <h3>Live Preview 📄</h3>
+            <p><strong>Name:</strong> {name || "[Your Name]"}</p>
+            <p><strong>Email:</strong> {email || "[Your Email]"}</p>
+            <p><strong>Topic:</strong> {topic}</p>
+            <p><strong>Level:</strong> {level}</p>
+          </div>
+        </div>
+      ) : (
+        <div className="success">
+          <h2>Registration Confirmed! ✅</h2>
+          <p>Name: {name}</p>
+          <p>Email: {email}</p>
+          <p>Topic: {topic}</p>
+          <p>Level: {level}</p>
+          <button onClick={resetForm}>Register Another Participant</button>
+        </div>
+      )}
+    </div>
+  );
+}
+
+
+export default App;
+
+
+
+App.css
+.app {
+  text-align: center;
+  font-family: Arial, sans-serif;
+  margin-top: 50px;
+}
+
+
+input, select {
+  display: block;
+  margin: 10px auto;
+  padding: 10px;
+  width: 250px;
+  font-size: 16px;
+}
+
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #673ab7;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  margin-top: 10px;
+}
+
+
+button:hover {
+  background-color: #512da8;
+}
+
+
+.preview {
+  margin-top: 30px;
+  border: 1px solid #ccc;
+  padding: 15px;
+  width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  text-align: left;
+}
+
+
+.success {
+  margin-top: 20px;
+  color: green;
+}
+
+
